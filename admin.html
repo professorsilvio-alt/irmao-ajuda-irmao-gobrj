@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel Admin – Irmão Ajuda Irmão · GOBRJ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-brand">
+      <div class="nav-emblem">⬡</div>
+      <span>GOBRJ · Admin</span>
+    </div>
+    <a href="index.html" class="btn-admin">← Voltar ao site</a>
+  </nav>
+
+  <div class="admin-header">
+    <div class="container">
+      <div class="section-badge">Painel Administrativo</div>
+      <h1>📋 Propostas de Convênio</h1>
+      <p>Campanha <strong>Irmão ajuda Irmão</strong> · Gerencie os cadastros e gere os Termos de Convênio</p>
+    </div>
+  </div>
+
+  <section class="admin-section">
+    <div class="container">
+
+      <!-- STATS -->
+      <div class="admin-stats" id="admin-stats">
+        <div class="stat-card">
+          <div class="stat-number" id="stat-total">0</div>
+          <div class="stat-label">Total de Propostas</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="stat-semana">0</div>
+          <div class="stat-label">Esta semana</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="stat-segmento">—</div>
+          <div class="stat-label">Segmento mais comum</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="stat-desc-medio">0%</div>
+          <div class="stat-label">Desconto médio ofertado</div>
+        </div>
+      </div>
+
+      <!-- CONTROLS -->
+      <div class="admin-controls">
+        <input class="search-input" id="search-input" type="text" placeholder="🔍  Buscar por nome, empresa, segmento..." />
+        <select class="filter-select" id="filter-segmento">
+          <option value="">Todos os segmentos</option>
+        </select>
+        <button class="btn-export" id="btn-export">⬇️ Exportar CSV</button>
+        <button class="btn-clear" id="btn-clear-all">🗑️ Limpar todos</button>
+      </div>
+
+      <!-- LIST -->
+      <div class="registros-list" id="registros-list"></div>
+
+    </div>
+  </section>
+
+  <!-- MODAL MINUTA -->
+  <div class="modal-overlay hidden" id="modal-overlay">
+    <div class="modal" id="modal-convenio">
+      <div class="modal-header">
+        <h3>📄 Termo de Convênio</h3>
+        <button class="modal-close" id="modal-close">✕</button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+      <div class="modal-footer">
+        <button class="btn-primary" id="btn-imprimir">🖨️ Imprimir / Salvar PDF</button>
+        <button class="btn-secondary" id="btn-fechar-modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+  /* ── Admin Logic ────────────────────────────────────── */
+  // DB_KEY, getDB, saveDB, formatDate e gerarMinuta vêm do app.js
+
+  let allRecords = [];
+
+  function render(records) {
+    const list = document.getElementById('registros-list');
+    if (!list) return;
+    if (!records.length) {
+      list.innerHTML = `<div class="empty-state"><div class="empty-icon">📭</div><p>Nenhuma proposta encontrada.</p></div>`;
+      return;
+    }
+    list.innerHTML = records.map(r => `
+      <div class="registro-card" id="card-${r.id}" onclick="toggleCard(${r.id})">
+        <div class="card-header">
+          <div>
+            <div class="card-name">${r.nome}</div>
+            <div class="card-empresa">🏢 ${r.razao_social} · ${r.segmento}</div>
+          </div>
+          <div style="text-align:right">
+            <div class="card-date">${formatDate(r.createdAt)}</div>
+            ${r.aceite_clausulas ? '<div class="badge-convenio" style="margin-top:4px">✅ Convênio aceito</div>' : ''}
+          </div>
+        </div>
+        <div class="card-tags">
+          <span class="tag tag-segmento">${r.segmento}</span>
+          <span class="tag tag-cidade">📍 ${r.cidade}</span>
+          ${r.percentual_desconto ? `<span class="tag tag-desconto">💰 ${r.percentual_desconto}% desconto</span>` : ''}
+          ${r.prazo_vigencia ? `<span class="tag tag-parceria">📅 ${r.prazo_vigencia} meses</span>` : ''}
+        </div>
+        <div class="card-detail" id="detail-${r.id}">
+          <div class="detail-row"><span class="detail-label">CPF</span><span>${r.cpf || '—'}</span></div>
+          <div class="detail-row"><span class="detail-label">E-mail</span><span>${r.email}</span></div>
+          <div class="detail-row"><span class="detail-label">Loja</span><span>${r.loja || '—'} ${r.cim ? `· CIM: ${r.cim}` : ''}</span></div>
+          <div class="detail-row"><span class="detail-label">CNPJ/CPF empresa</span><span>${r.cnpj_cpf || '—'}</span></div>
+          <div class="detail-row"><span class="detail-label">Endereço</span><span>${r.endereco || '—'}</span></div>
+          <div class="detail-row"><span class="detail-label">Representante</span><span>${r.representante}</span></div>
+          <div class="detail-row"><span class="detail-label">Descrição</span><span>${r.descricao_negocio}</span></div>
+          <div class="detail-row"><span class="detail-label">Tipo parceria</span><span>${r.tipo_parceria?.join(', ') || '—'}</span></div>
+          <div class="detail-row"><span class="detail-label">Proposta</span><span>${r.proposta_detalhes}</span></div>
+          ${r.site ? `<div class="detail-row"><span class="detail-label">Site</span><a href="${r.site}" target="_blank" style="color:var(--gold)">${r.site}</a></div>` : ''}
+          ${r.instagram ? `<div class="detail-row"><span class="detail-label">Instagram</span><span>${r.instagram}</span></div>` : ''}
+          <div class="detail-row"><span class="detail-label">Como conheceu</span><span>${r.como_conheceu || '—'}</span></div>
+          ${r.nome_assinatura ? `<div class="detail-row"><span class="detail-label">Assinatura digital</span><span>${r.nome_assinatura}</span></div>` : ''}
+          <div class="card-actions">
+            <a class="whatsapp-link" href="https://wa.me/55${r.whatsapp.replace(/\D/g,'')}" target="_blank">💬 ${r.whatsapp}</a>
+            <a class="whatsapp-link" href="mailto:${r.email}" style="background:rgba(99,179,237,.1);border-color:rgba(99,179,237,.2);color:#63b3ed">✉️ E-mail</a>
+            <button class="btn-ver-minuta" onclick="event.stopPropagation(); verMinuta(${r.id})">📄 Ver Minuta do Convênio</button>
+            <button class="btn-ver-minuta" style="color:#f87171;border-color:rgba(239,68,68,.2);background:rgba(239,68,68,.06)" onclick="event.stopPropagation(); excluir(${r.id})">🗑️ Excluir</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function toggleCard(id) {
+    const detail = document.getElementById(`detail-${id}`);
+    if (detail) detail.classList.toggle('open');
+  }
+
+  function verMinuta(id) {
+    const r = allRecords.find(x => x.id === id);
+    if (!r) return;
+    const overlay = document.getElementById('modal-overlay');
+    const body    = document.getElementById('modal-body');
+    if (!overlay || !body) return;
+    body.innerHTML = gerarMinuta(r);
+    overlay.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function excluir(id) {
+    if (!confirm('Excluir esta proposta?')) return;
+    const db = getDB().filter(x => x.id !== id);
+    saveDB(db);
+    init();
+  }
+
+  function updateStats(records) {
+    document.getElementById('stat-total').textContent = records.length;
+
+    const umaSemana = Date.now() - 7 * 24 * 60 * 60 * 1000;
+    document.getElementById('stat-semana').textContent = records.filter(r => new Date(r.createdAt).getTime() > umaSemana).length;
+
+    if (records.length) {
+      const segCount = {};
+      records.forEach(r => { segCount[r.segmento] = (segCount[r.segmento]||0) + 1; });
+      const top = Object.entries(segCount).sort((a,b)=>b[1]-a[1])[0];
+      document.getElementById('stat-segmento').textContent = top ? top[0].split('/')[0].trim() : '—';
+
+      const descontos = records.map(r => +r.percentual_desconto).filter(n => !isNaN(n) && n > 0);
+      const medio = descontos.length ? Math.round(descontos.reduce((a,b)=>a+b,0)/descontos.length) : 0;
+      document.getElementById('stat-desc-medio').textContent = medio ? `${medio}%` : '—';
+    }
+  }
+
+  function populateSegFilter(records) {
+    const sel = document.getElementById('filter-segmento');
+    const segs = [...new Set(records.map(r => r.segmento).filter(Boolean))].sort();
+    sel.innerHTML = '<option value="">Todos os segmentos</option>' + segs.map(s => `<option value="${s}">${s}</option>`).join('');
+  }
+
+  function filterRecords() {
+    const query = document.getElementById('search-input').value.toLowerCase();
+    const seg   = document.getElementById('filter-segmento').value;
+    return allRecords.filter(r => {
+      const text = [r.nome, r.razao_social, r.segmento, r.cidade, r.email, r.proposta_detalhes].join(' ').toLowerCase();
+      return text.includes(query) && (!seg || r.segmento === seg);
+    });
+  }
+
+  function exportCSV() {
+    if (!allRecords.length) { alert('Nenhum registro para exportar.'); return; }
+    const cols = ['id','createdAt','nome','cpf','email','whatsapp','loja','cim','razao_social','cnpj_cpf','segmento','cidade','endereco','representante','descricao_negocio','site','instagram','percentual_desconto','prazo_vigencia','tipo_parceria','proposta_detalhes','como_conheceu','nome_assinatura'];
+    const header = cols.join(';');
+    const rows = allRecords.map(r => cols.map(c => {
+      let val = Array.isArray(r[c]) ? r[c].join('|') : (r[c] ?? '');
+      return `"${String(val).replace(/"/g,'""')}"`;
+    }).join(';'));
+    const csv = '\uFEFF' + [header, ...rows].join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = `irmao_ajuda_irmao_${Date.now()}.csv`; a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function init() {
+    allRecords = getDB();
+    updateStats(allRecords);
+    populateSegFilter(allRecords);
+    render(allRecords);
+  }
+
+  document.getElementById('search-input')?.addEventListener('input', () => render(filterRecords()));
+  document.getElementById('filter-segmento')?.addEventListener('change', () => render(filterRecords()));
+  document.getElementById('btn-export')?.addEventListener('click', exportCSV);
+  document.getElementById('btn-clear-all')?.addEventListener('click', () => {
+    if (confirm('⚠️ Excluir TODOS os registros? Esta ação não pode ser desfeita.')) {
+      saveDB([]);
+      init();
+    }
+  });
+
+  // Modal
+  document.getElementById('modal-close')?.addEventListener('click', () => {
+    document.getElementById('modal-overlay').classList.add('hidden');
+    document.body.style.overflow = '';
+  });
+  document.getElementById('btn-fechar-modal')?.addEventListener('click', () => {
+    document.getElementById('modal-overlay').classList.add('hidden');
+    document.body.style.overflow = '';
+  });
+  document.getElementById('btn-imprimir')?.addEventListener('click', () => window.print());
+  document.getElementById('modal-overlay')?.addEventListener('click', e => {
+    if (e.target.id === 'modal-overlay') {
+      document.getElementById('modal-overlay').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+  });
+
+  init();
+  </script>
+</body>
+</html>

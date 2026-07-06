@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Irmão Ajuda Irmão – GOBRJ | Cadastro de Parceria</title>
+  <meta name="description" content="Faça parte da rede de fraternidade e apoio mútuo do Grande Oriente do Brasil – RJ. Cadastre seu negócio na campanha Irmão ajuda Irmão." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ========== NAVBAR ========== -->
+  <nav class="navbar">
+    <div class="nav-brand">
+      <div class="nav-emblem">⬡</div>
+      <span>GOBRJ</span>
+    </div>
+    <a href="admin.html" class="btn-admin" id="btn-admin-nav">Painel Admin</a>
+  </nav>
+
+  <!-- ========== HERO ========== -->
+  <header class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-particles" id="particles"></div>
+    <div class="hero-content">
+      <div class="hero-badge">🤝 Campanha Oficial · GOBRJ</div>
+      <h1 class="hero-title">
+        Irmão Ajuda<br /><span class="gradient-text">Irmão</span>
+      </h1>
+      <p class="hero-subtitle">
+        Valorizar os empreendedores da nossa Jurisdição<br />
+        também é fortalecer a família gobiana fluminense.
+      </p>
+      <div class="hero-tags">
+        <span>#IrmãoAjudaIrmão</span>
+        <span>#GOBRJ</span>
+        <span>#FraternidadeEmProgresso</span>
+        <span>#MaçonariaRJ</span>
+      </div>
+      <a href="#formulario" class="btn-cta" id="hero-cta">
+        Cadastrar meu negócio
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+      </a>
+    </div>
+    <div class="hero-scroll-hint">↓</div>
+  </header>
+
+  <!-- ========== ABOUT ========== -->
+  <section class="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-card">
+          <div class="about-icon">🏛️</div>
+          <h3>Rede Fraterna</h3>
+          <p>Conectamos empreendedores maçons para fortalecer negócios dentro da nossa jurisdição.</p>
+        </div>
+        <div class="about-card">
+          <div class="about-icon">🤝</div>
+          <h3>Apoio Mútuo</h3>
+          <p>Priorize fornecedores e parceiros da família gobiana. Juntos somos mais fortes.</p>
+        </div>
+        <div class="about-card">
+          <div class="about-icon">📢</div>
+          <h3>Divulgação Oficial</h3>
+          <p>Seu negócio será divulgado nos canais oficiais do Grande Oriente do Brasil – RJ.</p>
+        </div>
+        <div class="about-card">
+          <div class="about-icon">📜</div>
+          <h3>Convênio Formal</h3>
+          <p>Após aprovação, assinamos um Termo de Convênio oficial garantindo seus direitos e obrigações.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== BENEFICIÁRIOS ========== -->
+  <section class="beneficios-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">Quem é atendido</div>
+        <h2 class="section-title">Beneficiários do Convênio</h2>
+        <p class="section-subtitle">Ao firmar convênio com o GOBRJ, o proponente se compromete a atender:</p>
+      </div>
+      <div class="beneficios-grid">
+        <div class="beneficio-card">
+          <div class="bene-icon">⬡</div>
+          <h4>Jurisdicionados</h4>
+          <p>Todos os maçons regularizados filiados às Lojas do Grande Oriente do Brasil no Estado do Rio de Janeiro.</p>
+        </div>
+        <div class="beneficio-card">
+          <div class="bene-icon">👔</div>
+          <h4>Funcionários</h4>
+          <p>Funcionários e colaboradores do quadro administrativo do GOB-RJ.</p>
+        </div>
+        <div class="beneficio-card">
+          <div class="bene-icon">👨‍👩‍👧‍👦</div>
+          <h4>Familiares Diretos</h4>
+          <p>Cônjuge ou companheiro(a) e dependentes diretos (ascendentes e descendentes de 1º grau) dos jurisdicionados e funcionários.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FORM ========== -->
+  <section class="form-section" id="formulario">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">Cadastro de Proponente</div>
+        <h2 class="section-title">Faça parte da rede</h2>
+        <p class="section-subtitle">Preencha os dados, sua proposta e aceite as cláusulas do convênio. Entraremos em contato para finalização.</p>
+      </div>
+
+      <!-- SUCCESS MESSAGE -->
+      <div class="success-card" id="success-card">
+        <div class="success-icon">✅</div>
+        <h3>Proposta enviada com sucesso!</h3>
+        <p>Recebemos seu cadastro e proposta de convênio, irmão. Em breve o GOBRJ entrará em contato para formalização do Termo de Convênio.</p>
+        <div class="success-meta" id="success-meta"></div>
+        <div class="success-actions">
+          <button class="btn-primary" id="btn-ver-convenio">📄 Visualizar Minuta do Convênio</button>
+          <button class="btn-secondary" id="btn-novo-cadastro">Fazer novo cadastro</button>
+        </div>
+      </div>
+
+      <!-- FORM -->
+      <form class="registro-form" id="registro-form" novalidate>
+
+        <!-- STEP INDICATOR -->
+        <div class="steps">
+          <div class="step active" id="step-dot-1">
+            <div class="step-circle">1</div>
+            <span>Dados Pessoais</span>
+          </div>
+          <div class="step-line"></div>
+          <div class="step" id="step-dot-2">
+            <div class="step-circle">2</div>
+            <span>Seu Negócio</span>
+          </div>
+          <div class="step-line"></div>
+          <div class="step" id="step-dot-3">
+            <div class="step-circle">3</div>
+            <span>Proposta</span>
+          </div>
+          <div class="step-line"></div>
+          <div class="step" id="step-dot-4">
+            <div class="step-circle">4</div>
+            <span>Convênio</span>
+          </div>
+        </div>
+
+        <!-- STEP 1: Dados Pessoais -->
+        <div class="form-step" id="form-step-1">
+          <h3 class="step-title">👤 Dados Pessoais</h3>
+          <div class="form-grid">
+            <div class="form-group full">
+              <label for="nome">Nome Completo *</label>
+              <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required />
+              <span class="error-msg" id="error-nome"></span>
+            </div>
+            <div class="form-group full">
+              <label for="cpf">CPF *</label>
+              <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" maxlength="14" required />
+              <span class="error-msg" id="error-cpf"></span>
+            </div>
+            <div class="form-group">
+              <label for="email">E-mail *</label>
+              <input type="email" id="email" name="email" placeholder="seu@email.com" required />
+              <span class="error-msg" id="error-email"></span>
+            </div>
+            <div class="form-group">
+              <label for="whatsapp">WhatsApp *</label>
+              <input type="tel" id="whatsapp" name="whatsapp" placeholder="(21) 99999-9999" required />
+              <span class="error-msg" id="error-whatsapp"></span>
+            </div>
+            <div class="form-group">
+              <label for="loja">Loja Maçônica</label>
+              <input type="text" id="loja" name="loja" placeholder="Nome da sua loja" />
+            </div>
+            <div class="form-group">
+              <label for="cim">Número CIM</label>
+              <input type="text" id="cim" name="cim" placeholder="Seu número de cadastro" />
+            </div>
+          </div>
+          <div class="step-actions">
+            <button type="button" class="btn-primary" id="btn-step1-next">Próximo →</button>
+          </div>
+        </div>
+
+        <!-- STEP 2: Negócio -->
+        <div class="form-step hidden" id="form-step-2">
+          <h3 class="step-title">🏢 Seu Negócio</h3>
+          <div class="form-grid">
+            <div class="form-group full">
+              <label for="razao_social">Razão Social / Nome do Negócio *</label>
+              <input type="text" id="razao_social" name="razao_social" placeholder="Nome completo da empresa ou profissional" required />
+              <span class="error-msg" id="error-razao_social"></span>
+            </div>
+            <div class="form-group">
+              <label for="cnpj_cpf">CNPJ / CPF da Empresa</label>
+              <input type="text" id="cnpj_cpf" name="cnpj_cpf" placeholder="CNPJ ou CPF" />
+            </div>
+            <div class="form-group">
+              <label for="segmento">Segmento / Área de Atuação *</label>
+              <select id="segmento" name="segmento" required>
+                <option value="">Selecione...</option>
+                <option>Advocacia / Jurídico</option>
+                <option>Arquitetura / Engenharia</option>
+                <option>Contabilidade / Finanças</option>
+                <option>Saúde / Medicina</option>
+                <option>Educação / Treinamento</option>
+                <option>Tecnologia / TI</option>
+                <option>Alimentação / Gastronomia</option>
+                <option>Comércio / Varejo</option>
+                <option>Construção / Reformas</option>
+                <option>Consultoria / Gestão</option>
+                <option>Marketing / Publicidade</option>
+                <option>Logística / Transporte</option>
+                <option>Imóveis / Corretagem</option>
+                <option>Arte / Cultura</option>
+                <option>Seguros / Previdência</option>
+                <option>Beleza / Estética</option>
+                <option>Outro</option>
+              </select>
+              <span class="error-msg" id="error-segmento"></span>
+            </div>
+            <div class="form-group">
+              <label for="cidade">Cidade / Bairro *</label>
+              <input type="text" id="cidade" name="cidade" placeholder="Ex: Rio de Janeiro – Centro" required />
+              <span class="error-msg" id="error-cidade"></span>
+            </div>
+            <div class="form-group">
+              <label for="endereco">Endereço Completo</label>
+              <input type="text" id="endereco" name="endereco" placeholder="Rua, nº, complemento, CEP" />
+            </div>
+            <div class="form-group">
+              <label for="representante">Representante Legal *</label>
+              <input type="text" id="representante" name="representante" placeholder="Nome do representante legal" required />
+              <span class="error-msg" id="error-representante"></span>
+            </div>
+            <div class="form-group full">
+              <label for="descricao_negocio">Descrição do Negócio / Serviços Oferecidos *</label>
+              <textarea id="descricao_negocio" name="descricao_negocio" rows="4" placeholder="Descreva os produtos ou serviços que você oferece aos beneficiários do GOBRJ..." required></textarea>
+              <span class="error-msg" id="error-descricao_negocio"></span>
+            </div>
+            <div class="form-group">
+              <label for="site">Site / Link</label>
+              <input type="url" id="site" name="site" placeholder="https://seusite.com.br" />
+            </div>
+            <div class="form-group">
+              <label for="instagram">Instagram</label>
+              <input type="text" id="instagram" name="instagram" placeholder="@seu_perfil" />
+            </div>
+          </div>
+          <div class="step-actions">
+            <button type="button" class="btn-secondary" id="btn-step2-back">← Voltar</button>
+            <button type="button" class="btn-primary" id="btn-step2-next">Próximo →</button>
+          </div>
+        </div>
+
+        <!-- STEP 3: Proposta -->
+        <div class="form-step hidden" id="form-step-3">
+          <h3 class="step-title">💡 Proposta de Parceria</h3>
+          <div class="form-grid">
+            <div class="form-group full">
+              <label>Tipo de Benefício Oferecido aos Beneficiários *</label>
+              <div class="checkbox-group" id="tipo_parceria">
+                <label class="checkbox-item">
+                  <input type="checkbox" name="parceria" value="Desconto percentual exclusivo" />
+                  <span>💰 Desconto percentual exclusivo</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="parceria" value="Condições especiais de pagamento" />
+                  <span>📅 Condições especiais de pagamento</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="parceria" value="Atendimento prioritário" />
+                  <span>⭐ Atendimento prioritário</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="parceria" value="Serviço gratuito ou cortesia" />
+                  <span>🎁 Serviço gratuito ou cortesia</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="parceria" value="Participação em eventos maçônicos" />
+                  <span>🏛️ Participação em eventos maçônicos</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" name="parceria" value="Fornecimento ao GOB-RJ" />
+                  <span>📦 Fornecimento ao GOB-RJ</span>
+                </label>
+              </div>
+              <span class="error-msg" id="error-parceria"></span>
+            </div>
+            <div class="form-group">
+              <label for="percentual_desconto">Percentual de Desconto (%) *</label>
+              <input type="number" id="percentual_desconto" name="percentual_desconto" placeholder="Ex: 15" min="1" max="100" required />
+              <span class="hint-text">Desconto a ser concedido a jurisdicionados, funcionários e familiares diretos.</span>
+              <span class="error-msg" id="error-percentual_desconto"></span>
+            </div>
+            <div class="form-group">
+              <label for="prazo_vigencia">Prazo de Vigência Proposto *</label>
+              <select id="prazo_vigencia" name="prazo_vigencia" required>
+                <option value="">Selecione...</option>
+                <option value="12">12 meses</option>
+                <option value="24" selected>24 meses (padrão GOBRJ)</option>
+                <option value="36">36 meses</option>
+              </select>
+              <span class="error-msg" id="error-prazo_vigencia"></span>
+            </div>
+            <div class="form-group full">
+              <label for="proposta_detalhes">Detalhes Completos da Proposta *</label>
+              <textarea id="proposta_detalhes" name="proposta_detalhes" rows="5" placeholder="Descreva em detalhes: quais benefícios, como serão identificados os beneficiários, condições de uso, restrições, etc..." required></textarea>
+              <span class="error-msg" id="error-proposta_detalhes"></span>
+            </div>
+            <div class="form-group full">
+              <label for="como_conheceu">Como ficou sabendo da campanha?</label>
+              <select id="como_conheceu" name="como_conheceu">
+                <option value="">Selecione...</option>
+                <option>Instagram do GOBRJ</option>
+                <option>WhatsApp da loja</option>
+                <option>Indicação de irmão</option>
+                <option>Reunião de loja</option>
+                <option>Outro</option>
+              </select>
+            </div>
+          </div>
+          <div class="step-actions">
+            <button type="button" class="btn-secondary" id="btn-step3-back">← Voltar</button>
+            <button type="button" class="btn-primary" id="btn-step3-next">Próximo →</button>
+          </div>
+        </div>
+
+        <!-- STEP 4: Cláusulas do Convênio -->
+        <div class="form-step hidden" id="form-step-4">
+          <h3 class="step-title">📜 Cláusulas do Termo de Convênio</h3>
+
+          <div class="clausulas-info">
+            <p>Ao enviar este cadastro, o proponente declara que <strong>leu, compreendeu e concorda</strong> com as seguintes cláusulas que integrarão o Termo de Convênio a ser assinado com o <strong>Grande Oriente do Brasil no Estado do Rio de Janeiro – GOBRJ</strong>.</p>
+          </div>
+
+          <div class="clausulas-container" id="clausulas-container">
+
+            <div class="clausula-section">
+              <h4>CLÁUSULA 1ª – DO OBJETO</h4>
+              <p>O presente instrumento tem por objeto a formalização de parceria comercial entre a empresa/profissional proponente (<strong>"CONVENIADA"</strong>) e o Grande Oriente do Brasil no Estado do Rio de Janeiro (<strong>"CONVENIANTE"</strong>), para concessão de benefícios, descontos e condições especiais nos serviços/produtos da CONVENIADA aos beneficiários indicados na Cláusula 2ª, nos termos da campanha <em>Irmão ajuda Irmão</em>.</p>
+            </div>
+
+            <div class="clausula-section">
+              <h4>CLÁUSULA 2ª – DOS BENEFICIÁRIOS</h4>
+              <p><strong>2.1.</strong> Enquadram-se como <strong>beneficiários</strong> do presente convênio:</p>
+              <ul>
+                <li><strong>a)</strong> Todos os <strong>jurisdicionados</strong> (maçons regularizados) filiados às Lojas vinculadas ao Grande Oriente do Brasil no Estado do Rio de Janeiro;</li>
+                <li><strong>b)</strong> Os <strong>funcionários e colaboradores</strong> do quadro permanente e administrativo do GOB-RJ;</li>
+                <li><strong>c)</strong> O <strong>cônjuge ou companheiro(a)</strong> e os <strong>dependentes diretos</strong> (ascendentes e descendentes de 1º grau) dos jurisdicionados e funcionários mencionados nas alíneas "a" e "b".</li>
+              </ul>
+              <p><strong>2.2.</strong> A identificação do beneficiário se dará mediante apresentação de carteira de membro expedida pelo GOB-RJ, contracheque ou documento equivalente aceito pela CONVENIANTE.</p>
+              <p><strong>2.3.</strong> A CONVENIADA não poderá restringir o atendimento a beneficiários devidamente identificados, salvo em casos de inadimplência ou vedação expressa prevista neste instrumento.</p>
+            </div>
+
+            <div class="clausula-section">
+              <h4>CLÁUSULA 3ª – DOS BENEFÍCIOS E CONDIÇÕES</h4>
+              <p><strong>3.1.</strong> A CONVENIADA concederá aos beneficiários definidos na Cláusula 2ª o <strong>percentual de desconto e as condições</strong> especificados em sua Proposta de Parceria (Anexo I deste instrumento), que integra o presente convênio.</p>
+              <p><strong>3.2.</strong> Os benefícios concedidos <strong>não são cumulativos</strong> com outras promoções ou campanhas comerciais em vigor pela CONVENIADA, salvo expressa previsão em contrário.</p>
+              <p><strong>3.3.</strong> Em nenhuma hipótese a CONVENIANTE responderá pelo inadimplemento ou por obrigações contraídas pelos beneficiários perante a CONVENIADA.</p>
+              <p><strong>3.4.</strong> A CONVENIADA se compromete a <strong>manter a qualidade dos serviços/produtos</strong> ofertados, garantindo o mesmo padrão de atendimento prestado a clientes regulares.</p>
+            </div>
+
+            <div class="clausula-section">
+              <h4>CLÁUSULA 4ª – DAS OBRIGAÇÕES DA CONVENIADA</h4>
+              <p>Além das obrigações já estipuladas, a CONVENIADA assume o compromisso de:</p>
+              <ul>
+                <li><strong>a)</strong> Atender todos os beneficiários regularizados que se identificarem como tal, sem discriminação ou restrição indevida;</li>
+                <li><strong>b)</strong> Manter as condições da proposta durante toda a vigência do convênio;</li>
+                <li><strong>c)</strong> Comunicar ao GOB-RJ, com antecedência mínima de <strong>30 (trinta) dias</strong>, qualquer alteração nos benefícios ofertados;</li>
+                <li><strong>d)</strong> Dar preferência, sempre que possível, à contratação de serviços e fornecedores maçons da jurisdição;</li>
+                <li><strong>e)</strong> Disponibilizar material de divulgação dos serviços à CONVENIANTE para repasse aos jurisdicionados;</li>
+                <li><strong>f)</strong> Participar, quando convidado, de eventos, feiras e reuniões promovidos pelo GOB-RJ para apresentação de seus produtos/serviços.</li>
+              </ul>
+            </div>
+
+            <div class="clausula-section">
+              <h4>CLÁUSULA 5ª – DAS OBRIGAÇÕES DA CONVENIANTE (GOB-RJ)</h4>
+              <p>O GOB-RJ se compromete a:</p>
+              <ul>
+                <li><strong>a)</strong> Divulgar os serviços da CONVENIADA nos canais oficiais do GOBRJ (Instagram, WhatsApp, comunicações internas);</li>
+                <li><strong>b)</strong> Fornecer credencial ou documento de identificação aos jurisdicionados e funcionários para fruição dos benefícios;</li>
+                <li><strong>c)</strong> Informar prontamente aos beneficiários sobre eventuais alterações ou rescisão do convênio.</li>
+              </ul>
+            </div>
+
+            <div class="clausula-section">
+              <h4>CLÁUSULA 6ª – DO PRAZO</h4>
+              <p><strong>6.1.</strong> O presente instrumento vigorará pelo prazo estabelecido na Proposta de Parceria, contado a partir da data de assinatura, podendo ser renovado por igual período mediante acordo entre as partes.</p>
+              <p><strong>6.2.</strong> O convênio poderá ser rescindido a qualquer tempo por qualquer das partes, mediante aviso prévio de <strong>30 (trinta) dias</strong>, sem ônus para nenhuma das partes, ressalvados os compromissos em curso.</p>
+              <p><strong>6.3.</strong> Em caso de rescisão, a CONVENIANTE informará imediatamente os beneficiários sobre a cessação dos benefícios.</p>
+            </div>
+
+            <div class="clausula-section">
+              <h4>CLÁUSULA 7ª – DA PROTEÇÃO DE DADOS (LGPD)</h4>
+              <p><strong>7.1.</strong> As partes se comprometem a adotar todas as medidas necessárias para a proteção dos dados pessoais dos beneficiários tratados em decorrência deste convênio, em conformidade com a <strong>Lei nº 13.709/2018 (LGPD)</strong>.</p>
+              <p><strong>7.2.</strong> Os dados pessoais dos beneficiários somente serão utilizados para a finalidade de identificação e concessão dos benefícios previstos neste instrumento.</p>
+            </div>
+
+            <div class="clausula-section">
+              <h4>CLÁUSULA 8ª – DA PUBLICIDADE E USO DE MARCAS</h4>
+              <p><strong>8.1.</strong> A utilização de marcas, logotipos ou símbolos maçônicos do GOB-RJ pela CONVENIADA dependerá de prévia autorização escrita da CONVENIANTE.</p>
+              <p><strong>8.2.</strong> Os materiais publicitários que façam referência ao convênio deverão ser submetidos à aprovação prévia, que deverá ocorrer em até <strong>7 (sete) dias corridos</strong>. O silêncio será interpretado como não aprovação.</p>
+            </div>
+
+            <div class="clausula-section">
+              <h4>CLÁUSULA 9ª – DO FORO</h4>
+              <p>As partes elegem o foro do <strong>Município do Rio de Janeiro</strong> para dirimir quaisquer dúvidas oriundas deste convênio, com renúncia expressa a qualquer outro, por mais especial que seja.</p>
+            </div>
+
+          </div>
+
+          <!-- ACEITES -->
+          <div class="form-grid" style="margin-top: 28px;">
+            <div class="form-group full">
+              <label class="checkbox-item consent-check">
+                <input type="checkbox" id="aceite_clausulas" name="aceite_clausulas" required />
+                <span>Li e aceito as cláusulas do Termo de Convênio acima, comprometendo-me a atender jurisdicionados, funcionários e familiares diretos do GOB-RJ nas condições propostas. *</span>
+              </label>
+              <span class="error-msg" id="error-aceite_clausulas"></span>
+            </div>
+            <div class="form-group full">
+              <label class="checkbox-item consent-check">
+                <input type="checkbox" id="aceite_lgpd" name="aceite_lgpd" required />
+                <span>Autorizo o uso dos meus dados pessoais e da minha empresa para contato e divulgação nos canais do GOBRJ, conforme a LGPD. *</span>
+              </label>
+              <span class="error-msg" id="error-aceite_lgpd"></span>
+            </div>
+            <div class="form-group full">
+              <label for="nome_assinatura">Confirme seu nome completo como assinatura digital *</label>
+              <input type="text" id="nome_assinatura" name="nome_assinatura" placeholder="Digite seu nome completo para assinar digitalmente" required />
+              <span class="error-msg" id="error-nome_assinatura"></span>
+            </div>
+          </div>
+
+          <div class="step-actions">
+            <button type="button" class="btn-secondary" id="btn-step4-back">← Voltar</button>
+            <button type="submit" class="btn-submit" id="btn-submit">
+              <span id="btn-submit-text">✅ Enviar Proposta e Aceitar Convênio</span>
+              <div class="spinner hidden" id="spinner"></div>
+            </button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-brand">
+        <div class="footer-emblem">⬡</div>
+        <div>
+          <strong>Grande Oriente do Brasil – RJ</strong>
+          <p>Campanha Irmão ajuda Irmão · 2025</p>
+        </div>
+      </div>
+      <div class="footer-contact">
+        <p>Dúvidas? Fale com o Irmão Silvio:</p>
+        <a href="https://wa.me/5521964454332" target="_blank" class="whatsapp-btn" id="footer-whatsapp">
+          💬 (21) 96445-4332
+        </a>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 GOBRJ · Todos os direitos reservados · #FraternidadeEmProgresso</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========== MODAL MINUTA ========== -->
+  <div class="modal-overlay hidden" id="modal-overlay">
+    <div class="modal" id="modal-convenio">
+      <div class="modal-header">
+        <h3>📄 Minuta do Termo de Convênio</h3>
+        <button class="modal-close" id="modal-close">✕</button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+      <div class="modal-footer">
+        <button class="btn-primary" id="btn-imprimir">🖨️ Imprimir / Salvar PDF</button>
+        <button class="btn-secondary" id="btn-fechar-modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
