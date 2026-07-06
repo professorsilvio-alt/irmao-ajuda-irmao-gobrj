@@ -8,63 +8,230 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Login Screen ──────────────────────────────────────── */
+    .login-screen {
+      position: fixed; inset: 0; z-index: 999;
+      background: var(--navy);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .login-screen.hidden { display: none; }
+
+    .login-box {
+      background: var(--navy-card);
+      border: 1px solid rgba(201,167,78,.3);
+      border-radius: 20px;
+      padding: 48px 40px;
+      width: 100%; max-width: 420px;
+      box-shadow: 0 0 60px rgba(201,167,78,.12), 0 24px 64px rgba(0,0,0,.6);
+      text-align: center;
+    }
+    .login-emblem {
+      font-size: 3rem;
+      display: block;
+      margin-bottom: 10px;
+      animation: rotateEmblem 20s linear infinite;
+    }
+    .login-box h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.7rem;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    .login-box p {
+      font-size: .85rem;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+    }
+    .login-field {
+      position: relative;
+      margin-bottom: 16px;
+    }
+    .login-field input {
+      width: 100%;
+      background: rgba(255,255,255,.04);
+      border: 1.5px solid var(--navy-border);
+      border-radius: var(--radius-sm);
+      padding: 14px 48px 14px 16px;
+      color: var(--text-primary);
+      font-size: 1rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: var(--transition);
+      letter-spacing: .1em;
+    }
+    .login-field input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(201,167,78,.12);
+    }
+    .login-field input.invalid {
+      border-color: var(--error);
+      box-shadow: 0 0 0 3px rgba(239,68,68,.12);
+    }
+    .toggle-pw {
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; color: var(--text-muted);
+      cursor: pointer; font-size: 1.1rem; padding: 4px;
+    }
+    .login-error {
+      color: var(--error); font-size: .82rem;
+      margin-bottom: 16px; min-height: 1.2em;
+    }
+    .btn-login {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
+      border: none; border-radius: var(--radius-sm);
+      font-size: 1rem; font-weight: 700;
+      color: var(--navy); cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 4px 24px rgba(201,167,78,.35);
+    }
+    .btn-login:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(201,167,78,.5); }
+
+    /* ── Status Badges ─────────────────────────────────────── */
+    .status-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 4px 12px; border-radius: 100px;
+      font-size: .76rem; font-weight: 700; letter-spacing: .03em;
+    }
+    .status-analise  { background: rgba(251,191,36,.12); color: #fbbf24; border: 1px solid rgba(251,191,36,.3); }
+    .status-aprovado { background: rgba(34,197,94,.12);  color: #4ade80; border: 1px solid rgba(34,197,94,.3); }
+    .status-recusado { background: rgba(239,68,68,.12);  color: #f87171; border: 1px solid rgba(239,68,68,.3); }
+
+    .status-actions {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px;
+    }
+    .btn-status {
+      padding: 5px 14px; border-radius: 100px;
+      font-size: .78rem; font-weight: 600; cursor: pointer; transition: var(--transition); border: 1px solid;
+    }
+    .btn-status-analise  { background: rgba(251,191,36,.08); color: #fbbf24; border-color: rgba(251,191,36,.25); }
+    .btn-status-aprovado { background: rgba(34,197,94,.08);  color: #4ade80; border-color: rgba(34,197,94,.25); }
+    .btn-status-recusado { background: rgba(239,68,68,.08);  color: #f87171; border-color: rgba(239,68,68,.25); }
+    .btn-status:hover { filter: brightness(1.2); transform: translateY(-1px); }
+    .btn-status.active { filter: brightness(1.1); font-weight: 800; }
+
+    /* ── Filter by status ──────────────────────────────────── */
+    .filter-status {
+      padding: 10px 16px; background: var(--navy-card);
+      border: 1.5px solid var(--navy-border); border-radius: var(--radius-sm);
+      color: var(--text-muted); outline: none; font-size: .9rem; cursor: pointer; font-family: 'Inter', sans-serif;
+    }
+    .filter-status:focus { border-color: var(--gold); }
+    .filter-status option { background: var(--navy-mid); }
+
+    /* Logout button */
+    .btn-logout {
+      padding: 8px 16px;
+      background: rgba(239,68,68,.08); border: 1px solid rgba(239,68,68,.2);
+      border-radius: 8px; font-size: .8rem; font-weight: 500;
+      color: #f87171; cursor: pointer; transition: var(--transition); margin-left: 8px;
+    }
+    .btn-logout:hover { background: rgba(239,68,68,.18); }
+
+    /* Stat card for status */
+    .admin-stats { grid-template-columns: repeat(5, 1fr); }
+    @media (max-width: 900px) { .admin-stats { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 520px)  { .admin-stats { grid-template-columns: repeat(2, 1fr); } }
+  </style>
 </head>
 <body>
 
-  <nav class="navbar">
-    <div class="nav-brand">
-      <div class="nav-emblem">⬡</div>
-      <span>GOBRJ · Admin</span>
-    </div>
-    <a href="index.html" class="btn-admin">← Voltar ao site</a>
-  </nav>
-
-  <div class="admin-header">
-    <div class="container">
-      <div class="section-badge">Painel Administrativo</div>
-      <h1>📋 Propostas de Convênio</h1>
-      <p>Campanha <strong>Irmão ajuda Irmão</strong> · Gerencie os cadastros e gere os Termos de Convênio</p>
+  <!-- ╔══════════════════════════════════════╗ -->
+  <!-- ║        TELA DE LOGIN                 ║ -->
+  <!-- ╚══════════════════════════════════════╝ -->
+  <div class="login-screen" id="login-screen">
+    <div class="login-box">
+      <span class="login-emblem">⬡</span>
+      <h2>Painel Admin</h2>
+      <p>Irmão ajuda Irmão · GOBRJ<br/>Acesso restrito aos administradores</p>
+      <div class="login-field">
+        <input type="email" id="login-email" placeholder="E-mail do administrador" autocomplete="email" style="margin-bottom:0" />
+      </div>
+      <div class="login-field" style="margin-top:12px">
+        <input type="password" id="login-senha" placeholder="Senha" autocomplete="current-password" />
+        <button class="toggle-pw" id="toggle-pw" type="button" title="Mostrar/ocultar senha">👁</button>
+      </div>
+      <div class="login-error" id="login-error"></div>
+      <button class="btn-login" id="btn-login">Entrar no Painel</button>
     </div>
   </div>
 
-  <section class="admin-section">
-    <div class="container">
+  <!-- ╔══════════════════════════════════════╗ -->
+  <!-- ║        CONTEÚDO DO ADMIN             ║ -->
+  <!-- ╚══════════════════════════════════════╝ -->
+  <div id="admin-content" class="hidden">
 
-      <!-- STATS -->
-      <div class="admin-stats" id="admin-stats">
-        <div class="stat-card">
-          <div class="stat-number" id="stat-total">0</div>
-          <div class="stat-label">Total de Propostas</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number" id="stat-semana">0</div>
-          <div class="stat-label">Esta semana</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number" id="stat-segmento">—</div>
-          <div class="stat-label">Segmento mais comum</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number" id="stat-desc-medio">0%</div>
-          <div class="stat-label">Desconto médio ofertado</div>
-        </div>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <div class="nav-emblem">⬡</div>
+        <span>GOBRJ · Admin</span>
       </div>
-
-      <!-- CONTROLS -->
-      <div class="admin-controls">
-        <input class="search-input" id="search-input" type="text" placeholder="🔍  Buscar por nome, empresa, segmento..." />
-        <select class="filter-select" id="filter-segmento">
-          <option value="">Todos os segmentos</option>
-        </select>
-        <button class="btn-export" id="btn-export">⬇️ Exportar CSV</button>
-        <button class="btn-clear" id="btn-clear-all">🗑️ Limpar todos</button>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <a href="index.html" class="btn-admin">← Voltar ao site</a>
+        <button class="btn-logout" id="btn-logout">🔒 Sair</button>
       </div>
+    </nav>
 
-      <!-- LIST -->
-      <div class="registros-list" id="registros-list"></div>
-
+    <div class="admin-header">
+      <div class="container">
+        <div class="section-badge">Painel Administrativo</div>
+        <h1>📋 Propostas de Convênio</h1>
+        <p>Campanha <strong>Irmão ajuda Irmão</strong> · Gerencie os cadastros, status e gere os Termos de Convênio</p>
+      </div>
     </div>
-  </section>
+
+    <section class="admin-section">
+      <div class="container">
+
+        <!-- STATS -->
+        <div class="admin-stats" id="admin-stats">
+          <div class="stat-card">
+            <div class="stat-number" id="stat-total">0</div>
+            <div class="stat-label">Total de Propostas</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="stat-analise" style="color:#fbbf24">0</div>
+            <div class="stat-label">⏳ Em análise</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="stat-aprovado" style="color:#4ade80">0</div>
+            <div class="stat-label">✅ Aprovados</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="stat-segmento">—</div>
+            <div class="stat-label">Segmento top</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="stat-desc-medio">0%</div>
+            <div class="stat-label">Desconto médio</div>
+          </div>
+        </div>
+
+        <!-- CONTROLS -->
+        <div class="admin-controls">
+          <input class="search-input" id="search-input" type="text" placeholder="🔍  Buscar por nome, empresa, segmento..." />
+          <select class="filter-select" id="filter-segmento">
+            <option value="">Todos os segmentos</option>
+          </select>
+          <select class="filter-status" id="filter-status">
+            <option value="">Todos os status</option>
+            <option value="em análise">⏳ Em análise</option>
+            <option value="aprovado">✅ Aprovado</option>
+            <option value="recusado">❌ Recusado</option>
+          </select>
+          <button class="btn-export" id="btn-export">⬇️ Exportar CSV</button>
+          <button class="btn-clear" id="btn-clear-all">🗑️ Limpar todos</button>
+        </div>
+
+        <!-- LIST -->
+        <div class="registros-list" id="registros-list"></div>
+
+      </div>
+    </section>
+
+  </div><!-- /admin-content -->
 
   <!-- MODAL MINUTA -->
   <div class="modal-overlay hidden" id="modal-overlay">
@@ -81,11 +248,135 @@
     </div>
   </div>
 
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
   <script src="app.js"></script>
   <script>
-  /* ── Admin Logic ────────────────────────────────────── */
-  // DB_KEY, getDB, saveDB, formatDate e gerarMinuta vêm do app.js
+  /* ═══════════════════════════════════════════════════
+     AUTENTICAÇÃO — Firebase Auth
+  ═══════════════════════════════════════════════════ */
 
+  function showLogin() {
+    document.getElementById('login-screen').classList.remove('hidden');
+    document.getElementById('admin-content').classList.add('hidden');
+  }
+  function showAdmin() {
+    document.getElementById('login-screen').classList.add('hidden');
+    document.getElementById('admin-content').classList.remove('hidden');
+    init();
+  }
+
+  // Observa estado de autenticação do Firebase
+  auth.onAuthStateChanged(user => {
+    if (user) { showAdmin(); }
+    else      { showLogin(); }
+  });
+
+  // Botão entrar
+  document.getElementById('btn-login').addEventListener('click', tentarLogin);
+  document.getElementById('login-senha').addEventListener('keydown', e => {
+    if (e.key === 'Enter') tentarLogin();
+  });
+  document.getElementById('login-email')?.addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('login-senha').focus();
+  });
+
+  async function tentarLogin() {
+    const email = document.getElementById('login-email').value.trim();
+    const senha = document.getElementById('login-senha').value;
+    const errEl = document.getElementById('login-error');
+    const senhaInput = document.getElementById('login-senha');
+    const emailInput = document.getElementById('login-email');
+    const btnLogin   = document.getElementById('btn-login');
+
+    if (!email || !senha) {
+      errEl.textContent = 'Preencha e-mail e senha.';
+      return;
+    }
+
+    btnLogin.textContent = 'Entrando...';
+    btnLogin.disabled = true;
+    errEl.textContent = '';
+
+    try {
+      await auth.signInWithEmailAndPassword(email, senha);
+      // onAuthStateChanged cuidará de mostrar o admin
+    } catch (err) {
+      errEl.textContent = '❌ E-mail ou senha incorretos.';
+      senhaInput.classList.add('invalid');
+      emailInput.classList.add('invalid');
+      senhaInput.value = '';
+      senhaInput.focus();
+      senhaInput.animate([
+        { transform: 'translateX(-6px)' },
+        { transform: 'translateX(6px)' },
+        { transform: 'translateX(-4px)' },
+        { transform: 'translateX(4px)' },
+        { transform: 'translateX(0)' },
+      ], { duration: 300, easing: 'ease' });
+    } finally {
+      btnLogin.textContent = 'Entrar no Painel';
+      btnLogin.disabled = false;
+    }
+  }
+
+  // Toggle mostrar senha
+  document.getElementById('toggle-pw').addEventListener('click', () => {
+    const input = document.getElementById('login-senha');
+    const btn   = document.getElementById('toggle-pw');
+    if (input.type === 'password') { input.type = 'text'; btn.textContent = '🙈'; }
+    else                           { input.type = 'password'; btn.textContent = '👁'; }
+  });
+
+  // Logout
+  document.getElementById('btn-logout').addEventListener('click', () => auth.signOut());
+
+  /* ═══════════════════════════════════════════════════
+     STATUS
+  ═══════════════════════════════════════════════════ */
+  function getStatusClass(status) {
+    if (status === 'aprovado') return 'status-aprovado';
+    if (status === 'recusado') return 'status-recusado';
+    return 'status-analise';
+  }
+  function getStatusLabel(status) {
+    if (status === 'aprovado') return '✅ Aprovado';
+    if (status === 'recusado') return '❌ Recusado';
+    return '⏳ Em análise';
+  }
+
+  async function alterarStatus(id, novoStatus) {
+    try {
+      await updateRecord(id, { status: novoStatus });
+      const idx = allRecords.findIndex(x => x.id === id);
+      if (idx !== -1) {
+        allRecords[idx].status = novoStatus;
+        allRecords[idx].statusAtualizadoEm = new Date().toISOString();
+      }
+    } catch(e) {
+      console.error('Erro ao atualizar status:', e);
+      alert('Erro ao atualizar status. Tente novamente.');
+      return;
+    }
+    // Atualiza só o badge e botões sem re-render completo
+    const badge = document.getElementById(`status-badge-${id}`);
+    if (badge) {
+      badge.className = `status-badge ${getStatusClass(novoStatus)}`;
+      badge.textContent = getStatusLabel(novoStatus);
+    }
+    // Atualiza botões ativos
+    ['analise','aprovado','recusado'].forEach(s => {
+      const btn = document.getElementById(`btn-status-${s}-${id}`);
+      if (btn) btn.classList.toggle('active', s === novoStatus || (s === 'analise' && novoStatus === 'em análise'));
+    });
+    updateStats(allRecords);
+  }
+
+  /* ═══════════════════════════════════════════════════
+     ADMIN LOGIC
+  ═══════════════════════════════════════════════════ */
   let allRecords = [];
 
   function render(records) {
@@ -95,16 +386,19 @@
       list.innerHTML = `<div class="empty-state"><div class="empty-icon">📭</div><p>Nenhuma proposta encontrada.</p></div>`;
       return;
     }
-    list.innerHTML = records.map(r => `
+    list.innerHTML = records.map(r => {
+      const status = r.status || 'em análise';
+      return `
       <div class="registro-card" id="card-${r.id}" onclick="toggleCard(${r.id})">
         <div class="card-header">
           <div>
             <div class="card-name">${r.nome}</div>
             <div class="card-empresa">🏢 ${r.razao_social} · ${r.segmento}</div>
           </div>
-          <div style="text-align:right">
+          <div style="text-align:right; display:flex; flex-direction:column; align-items:flex-end; gap:6px;">
             <div class="card-date">${formatDate(r.createdAt)}</div>
-            ${r.aceite_clausulas ? '<div class="badge-convenio" style="margin-top:4px">✅ Convênio aceito</div>' : ''}
+            <span class="status-badge ${getStatusClass(status)}" id="status-badge-${r.id}">${getStatusLabel(status)}</span>
+            ${r.aceite_clausulas ? '<div class="badge-convenio">📜 Convênio aceito</div>' : ''}
           </div>
         </div>
         <div class="card-tags">
@@ -127,15 +421,40 @@
           ${r.instagram ? `<div class="detail-row"><span class="detail-label">Instagram</span><span>${r.instagram}</span></div>` : ''}
           <div class="detail-row"><span class="detail-label">Como conheceu</span><span>${r.como_conheceu || '—'}</span></div>
           ${r.nome_assinatura ? `<div class="detail-row"><span class="detail-label">Assinatura digital</span><span>${r.nome_assinatura}</span></div>` : ''}
+          ${r.statusAtualizadoEm ? `<div class="detail-row"><span class="detail-label">Status atualizado</span><span>${formatDate(r.statusAtualizadoEm)}</span></div>` : ''}
+
+          <!-- Alterar Status -->
+          <div class="detail-row" style="align-items:center;">
+            <span class="detail-label">Alterar status</span>
+            <div class="status-actions">
+              <button id="btn-status-analise-${r.id}"
+                class="btn-status btn-status-analise ${status === 'em análise' ? 'active' : ''}"
+                onclick="event.stopPropagation(); alterarStatus(${r.id}, 'em análise')">
+                ⏳ Em análise
+              </button>
+              <button id="btn-status-aprovado-${r.id}"
+                class="btn-status btn-status-aprovado ${status === 'aprovado' ? 'active' : ''}"
+                onclick="event.stopPropagation(); alterarStatus(${r.id}, 'aprovado')">
+                ✅ Aprovar
+              </button>
+              <button id="btn-status-recusado-${r.id}"
+                class="btn-status btn-status-recusado ${status === 'recusado' ? 'active' : ''}"
+                onclick="event.stopPropagation(); alterarStatus(${r.id}, 'recusado')">
+                ❌ Recusar
+              </button>
+            </div>
+          </div>
+
+          <!-- Ações -->
           <div class="card-actions">
             <a class="whatsapp-link" href="https://wa.me/55${r.whatsapp.replace(/\D/g,'')}" target="_blank">💬 ${r.whatsapp}</a>
             <a class="whatsapp-link" href="mailto:${r.email}" style="background:rgba(99,179,237,.1);border-color:rgba(99,179,237,.2);color:#63b3ed">✉️ E-mail</a>
-            <button class="btn-ver-minuta" onclick="event.stopPropagation(); verMinuta(${r.id})">📄 Ver Minuta do Convênio</button>
+            <button class="btn-ver-minuta" onclick="event.stopPropagation(); verMinuta(${r.id})">📄 Ver Minuta</button>
             <button class="btn-ver-minuta" style="color:#f87171;border-color:rgba(239,68,68,.2);background:rgba(239,68,68,.06)" onclick="event.stopPropagation(); excluir(${r.id})">🗑️ Excluir</button>
           </div>
         </div>
       </div>
-    `).join('');
+    `}).join('');
   }
 
   function toggleCard(id) {
@@ -154,25 +473,25 @@
     document.body.style.overflow = 'hidden';
   }
 
-  function excluir(id) {
-    if (!confirm('Excluir esta proposta?')) return;
-    const db = getDB().filter(x => x.id !== id);
-    saveDB(db);
-    init();
+  async function excluir(id) {
+    if (!confirm('Excluir esta proposta permanentemente?')) return;
+    try {
+      await deleteRecord(id);
+      await init();
+    } catch(e) {
+      alert('Erro ao excluir. Tente novamente.');
+    }
   }
 
   function updateStats(records) {
-    document.getElementById('stat-total').textContent = records.length;
-
-    const umaSemana = Date.now() - 7 * 24 * 60 * 60 * 1000;
-    document.getElementById('stat-semana').textContent = records.filter(r => new Date(r.createdAt).getTime() > umaSemana).length;
-
+    document.getElementById('stat-total').textContent    = records.length;
+    document.getElementById('stat-analise').textContent  = records.filter(r => (r.status || 'em análise') === 'em análise').length;
+    document.getElementById('stat-aprovado').textContent = records.filter(r => r.status === 'aprovado').length;
     if (records.length) {
       const segCount = {};
       records.forEach(r => { segCount[r.segmento] = (segCount[r.segmento]||0) + 1; });
       const top = Object.entries(segCount).sort((a,b)=>b[1]-a[1])[0];
       document.getElementById('stat-segmento').textContent = top ? top[0].split('/')[0].trim() : '—';
-
       const descontos = records.map(r => +r.percentual_desconto).filter(n => !isNaN(n) && n > 0);
       const medio = descontos.length ? Math.round(descontos.reduce((a,b)=>a+b,0)/descontos.length) : 0;
       document.getElementById('stat-desc-medio').textContent = medio ? `${medio}%` : '—';
@@ -180,23 +499,25 @@
   }
 
   function populateSegFilter(records) {
-    const sel = document.getElementById('filter-segmento');
+    const sel  = document.getElementById('filter-segmento');
     const segs = [...new Set(records.map(r => r.segmento).filter(Boolean))].sort();
     sel.innerHTML = '<option value="">Todos os segmentos</option>' + segs.map(s => `<option value="${s}">${s}</option>`).join('');
   }
 
   function filterRecords() {
-    const query = document.getElementById('search-input').value.toLowerCase();
-    const seg   = document.getElementById('filter-segmento').value;
+    const query  = document.getElementById('search-input').value.toLowerCase();
+    const seg    = document.getElementById('filter-segmento').value;
+    const status = document.getElementById('filter-status').value;
     return allRecords.filter(r => {
-      const text = [r.nome, r.razao_social, r.segmento, r.cidade, r.email, r.proposta_detalhes].join(' ').toLowerCase();
-      return text.includes(query) && (!seg || r.segmento === seg);
+      const text    = [r.nome, r.razao_social, r.segmento, r.cidade, r.email, r.proposta_detalhes].join(' ').toLowerCase();
+      const rStatus = r.status || 'em análise';
+      return text.includes(query) && (!seg || r.segmento === seg) && (!status || rStatus === status);
     });
   }
 
   function exportCSV() {
     if (!allRecords.length) { alert('Nenhum registro para exportar.'); return; }
-    const cols = ['id','createdAt','nome','cpf','email','whatsapp','loja','cim','razao_social','cnpj_cpf','segmento','cidade','endereco','representante','descricao_negocio','site','instagram','percentual_desconto','prazo_vigencia','tipo_parceria','proposta_detalhes','como_conheceu','nome_assinatura'];
+    const cols = ['id','createdAt','status','nome','cpf','email','whatsapp','loja','cim','razao_social','cnpj_cpf','segmento','cidade','endereco','representante','descricao_negocio','site','instagram','percentual_desconto','prazo_vigencia','tipo_parceria','proposta_detalhes','como_conheceu','nome_assinatura'];
     const header = cols.join(';');
     const rows = allRecords.map(r => cols.map(c => {
       let val = Array.isArray(r[c]) ? r[c].join('|') : (r[c] ?? '');
@@ -204,14 +525,16 @@
     }).join(';'));
     const csv = '\uFEFF' + [header, ...rows].join('\n');
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
     a.href = url; a.download = `irmao_ajuda_irmao_${Date.now()}.csv`; a.click();
     URL.revokeObjectURL(url);
   }
 
-  function init() {
-    allRecords = getDB();
+  async function init() {
+    const list = document.getElementById('registros-list');
+    if (list) list.innerHTML = '<div class="empty-state"><div class="empty-icon" style="animation: spin .8s linear infinite">⬡</div><p>Carregando propostas...</p></div>';
+    allRecords = await getDB();
     updateStats(allRecords);
     populateSegFilter(allRecords);
     render(allRecords);
@@ -219,11 +542,16 @@
 
   document.getElementById('search-input')?.addEventListener('input', () => render(filterRecords()));
   document.getElementById('filter-segmento')?.addEventListener('change', () => render(filterRecords()));
+  document.getElementById('filter-status')?.addEventListener('change', () => render(filterRecords()));
   document.getElementById('btn-export')?.addEventListener('click', exportCSV);
-  document.getElementById('btn-clear-all')?.addEventListener('click', () => {
+  document.getElementById('btn-clear-all')?.addEventListener('click', async () => {
     if (confirm('⚠️ Excluir TODOS os registros? Esta ação não pode ser desfeita.')) {
-      saveDB([]);
-      init();
+      try {
+        const batch = firebase.firestore().batch();
+        allRecords.forEach(r => batch.delete(firebase.firestore().collection('propostas').doc(r.id)));
+        await batch.commit();
+        await init();
+      } catch(e) { alert('Erro ao limpar. Tente novamente.'); }
     }
   });
 
@@ -243,8 +571,6 @@
       document.body.style.overflow = '';
     }
   });
-
-  init();
   </script>
 </body>
 </html>
