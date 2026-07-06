@@ -379,6 +379,12 @@
   ═══════════════════════════════════════════════════ */
   let allRecords = [];
 
+  function esc(str) {
+    if (str === null || str === undefined) return '';
+    return String(str).replace(/[&<>'"]/g, 
+      tag => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[tag] || tag));
+  }
+
   function render(records) {
     const list = document.getElementById('registros-list');
     if (!list) return;
@@ -389,11 +395,11 @@
     list.innerHTML = records.map(r => {
       const status = r.status || 'em análise';
       return `
-      <div class="registro-card" id="card-${r.id}" onclick="toggleCard(${r.id})">
+      <div class="registro-card" id="card-${r.id}" onclick="toggleCard('${r.id}')">
         <div class="card-header">
           <div>
-            <div class="card-name">${r.nome}</div>
-            <div class="card-empresa">🏢 ${r.razao_social} · ${r.segmento}</div>
+            <div class="card-name">${esc(r.nome)}</div>
+            <div class="card-empresa">🏢 ${esc(r.razao_social)} · ${esc(r.segmento)}</div>
           </div>
           <div style="text-align:right; display:flex; flex-direction:column; align-items:flex-end; gap:6px;">
             <div class="card-date">${formatDate(r.createdAt)}</div>
@@ -402,25 +408,25 @@
           </div>
         </div>
         <div class="card-tags">
-          <span class="tag tag-segmento">${r.segmento}</span>
-          <span class="tag tag-cidade">📍 ${r.cidade}</span>
-          ${r.percentual_desconto ? `<span class="tag tag-desconto">💰 ${r.percentual_desconto}% desconto</span>` : ''}
-          ${r.prazo_vigencia ? `<span class="tag tag-parceria">📅 ${r.prazo_vigencia} meses</span>` : ''}
+          <span class="tag tag-segmento">${esc(r.segmento)}</span>
+          <span class="tag tag-cidade">📍 ${esc(r.cidade)}</span>
+          ${r.percentual_desconto ? `<span class="tag tag-desconto">💰 ${esc(r.percentual_desconto)}% desconto</span>` : ''}
+          ${r.prazo_vigencia ? `<span class="tag tag-parceria">📅 ${esc(r.prazo_vigencia)} meses</span>` : ''}
         </div>
         <div class="card-detail" id="detail-${r.id}">
-          <div class="detail-row"><span class="detail-label">CPF</span><span>${r.cpf || '—'}</span></div>
-          <div class="detail-row"><span class="detail-label">E-mail</span><span>${r.email}</span></div>
-          <div class="detail-row"><span class="detail-label">Loja</span><span>${r.loja || '—'} ${r.cim ? `· CIM: ${r.cim}` : ''}</span></div>
-          <div class="detail-row"><span class="detail-label">CNPJ/CPF empresa</span><span>${r.cnpj_cpf || '—'}</span></div>
-          <div class="detail-row"><span class="detail-label">Endereço</span><span>${r.endereco || '—'}</span></div>
-          <div class="detail-row"><span class="detail-label">Representante</span><span>${r.representante}</span></div>
-          <div class="detail-row"><span class="detail-label">Descrição</span><span>${r.descricao_negocio}</span></div>
-          <div class="detail-row"><span class="detail-label">Tipo parceria</span><span>${r.tipo_parceria?.join(', ') || '—'}</span></div>
-          <div class="detail-row"><span class="detail-label">Proposta</span><span>${r.proposta_detalhes}</span></div>
-          ${r.site ? `<div class="detail-row"><span class="detail-label">Site</span><a href="${r.site}" target="_blank" style="color:var(--gold)">${r.site}</a></div>` : ''}
-          ${r.instagram ? `<div class="detail-row"><span class="detail-label">Instagram</span><span>${r.instagram}</span></div>` : ''}
-          <div class="detail-row"><span class="detail-label">Como conheceu</span><span>${r.como_conheceu || '—'}</span></div>
-          ${r.nome_assinatura ? `<div class="detail-row"><span class="detail-label">Assinatura digital</span><span>${r.nome_assinatura}</span></div>` : ''}
+          <div class="detail-row"><span class="detail-label">CPF</span><span>${esc(r.cpf) || '—'}</span></div>
+          <div class="detail-row"><span class="detail-label">E-mail</span><span>${esc(r.email)}</span></div>
+          <div class="detail-row"><span class="detail-label">Loja</span><span>${esc(r.loja) || '—'} ${r.cim ? `· CIM: ${esc(r.cim)}` : ''}</span></div>
+          <div class="detail-row"><span class="detail-label">CNPJ/CPF empresa</span><span>${esc(r.cnpj_cpf) || '—'}</span></div>
+          <div class="detail-row"><span class="detail-label">Endereço</span><span>${esc(r.endereco) || '—'}</span></div>
+          <div class="detail-row"><span class="detail-label">Representante</span><span>${esc(r.representante)}</span></div>
+          <div class="detail-row"><span class="detail-label">Descrição</span><span>${esc(r.descricao_negocio)}</span></div>
+          <div class="detail-row"><span class="detail-label">Tipo parceria</span><span>${esc(r.tipo_parceria?.join(', ')) || '—'}</span></div>
+          <div class="detail-row"><span class="detail-label">Proposta</span><span>${esc(r.proposta_detalhes)}</span></div>
+          ${r.site ? `<div class="detail-row"><span class="detail-label">Site</span><a href="${esc(r.site)}" target="_blank" style="color:var(--gold)">${esc(r.site)}</a></div>` : ''}
+          ${r.instagram ? `<div class="detail-row"><span class="detail-label">Instagram</span><span>${esc(r.instagram)}</span></div>` : ''}
+          <div class="detail-row"><span class="detail-label">Como conheceu</span><span>${esc(r.como_conheceu) || '—'}</span></div>
+          ${r.nome_assinatura ? `<div class="detail-row"><span class="detail-label">Assinatura digital</span><span>${esc(r.nome_assinatura)}</span></div>` : ''}
           ${r.statusAtualizadoEm ? `<div class="detail-row"><span class="detail-label">Status atualizado</span><span>${formatDate(r.statusAtualizadoEm)}</span></div>` : ''}
 
           <!-- Alterar Status -->
@@ -429,17 +435,17 @@
             <div class="status-actions">
               <button id="btn-status-analise-${r.id}"
                 class="btn-status btn-status-analise ${status === 'em análise' ? 'active' : ''}"
-                onclick="event.stopPropagation(); alterarStatus(${r.id}, 'em análise')">
+                onclick="event.stopPropagation(); alterarStatus('${r.id}', 'em análise')">
                 ⏳ Em análise
               </button>
               <button id="btn-status-aprovado-${r.id}"
                 class="btn-status btn-status-aprovado ${status === 'aprovado' ? 'active' : ''}"
-                onclick="event.stopPropagation(); alterarStatus(${r.id}, 'aprovado')">
+                onclick="event.stopPropagation(); alterarStatus('${r.id}', 'aprovado')">
                 ✅ Aprovar
               </button>
               <button id="btn-status-recusado-${r.id}"
                 class="btn-status btn-status-recusado ${status === 'recusado' ? 'active' : ''}"
-                onclick="event.stopPropagation(); alterarStatus(${r.id}, 'recusado')">
+                onclick="event.stopPropagation(); alterarStatus('${r.id}', 'recusado')">
                 ❌ Recusar
               </button>
             </div>
@@ -447,10 +453,10 @@
 
           <!-- Ações -->
           <div class="card-actions">
-            <a class="whatsapp-link" href="https://wa.me/55${r.whatsapp.replace(/\D/g,'')}" target="_blank">💬 ${r.whatsapp}</a>
-            <a class="whatsapp-link" href="mailto:${r.email}" style="background:rgba(99,179,237,.1);border-color:rgba(99,179,237,.2);color:#63b3ed">✉️ E-mail</a>
-            <button class="btn-ver-minuta" onclick="event.stopPropagation(); verMinuta(${r.id})">📄 Ver Minuta</button>
-            <button class="btn-ver-minuta" style="color:#f87171;border-color:rgba(239,68,68,.2);background:rgba(239,68,68,.06)" onclick="event.stopPropagation(); excluir(${r.id})">🗑️ Excluir</button>
+            <a class="whatsapp-link" href="https://wa.me/55${r.whatsapp.replace(/\D/g,'')}" target="_blank">💬 ${esc(r.whatsapp)}</a>
+            <a class="whatsapp-link" href="mailto:${esc(r.email)}" style="background:rgba(99,179,237,.1);border-color:rgba(99,179,237,.2);color:#63b3ed">✉️ E-mail</a>
+            <button class="btn-ver-minuta" onclick="event.stopPropagation(); verMinuta('${r.id}')">📄 Ver Minuta</button>
+            <button class="btn-ver-minuta" style="color:#f87171;border-color:rgba(239,68,68,.2);background:rgba(239,68,68,.06)" onclick="event.stopPropagation(); excluir('${r.id}')">🗑️ Excluir</button>
           </div>
         </div>
       </div>

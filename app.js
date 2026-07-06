@@ -323,10 +323,16 @@ document.getElementById('modal-overlay')?.addEventListener('click', e => {
 document.getElementById('btn-imprimir')?.addEventListener('click', () => window.print());
 
 /* ── Gerador de Minuta ──────────────────────────────────────── */
+function esc(str) {
+  if (str === null || str === undefined) return '';
+  return String(str).replace(/[&<>'"]/g, 
+    tag => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[tag] || tag));
+}
+
 function gerarMinuta(r) {
   const hoje = new Date().toLocaleDateString('pt-BR', { day:'2-digit', month:'long', year:'numeric' });
-  const parceriasTexto = r.tipo_parceria?.join('; ') || '—';
-  const prazoMeses = r.prazo_vigencia || '24';
+  const parceriasTexto = esc(r.tipo_parceria?.join('; ') || '—');
+  const prazoMeses = esc(r.prazo_vigencia) || '24';
   const prazoExtenso = prazoMeses === '12' ? 'doze' : prazoMeses === '24' ? 'vinte e quatro' : 'trinta e seis';
 
   return `
@@ -335,10 +341,10 @@ function gerarMinuta(r) {
     <p class="minuta-subtitle">Campanha <em>Irmão ajuda Irmão</em> · Grande Oriente do Brasil no Estado do Rio de Janeiro</p>
     <div class="minuta-partes">
       <p><strong>CONVENIANTE:</strong> Grande Oriente do Brasil no Estado do Rio de Janeiro – GOBRJ, representado pelo Grão-Mestre Estadual <strong>André Luís Rosa dos Santos</strong>.</p>
-      <p><strong>CONVENIADA:</strong> ${r.razao_social}${r.cnpj_cpf ? `, CNPJ/CPF: ${r.cnpj_cpf}` : ''}, com atuação em <strong>${r.cidade}</strong>${r.endereco ? ` (${r.endereco})` : ''}, representada por <strong>${r.representante}</strong>.</p>
+      <p><strong>CONVENIADA:</strong> ${esc(r.razao_social)}${r.cnpj_cpf ? `, CNPJ/CPF: ${esc(r.cnpj_cpf)}` : ''}, com atuação em <strong>${esc(r.cidade)}</strong>${r.endereco ? ` (${esc(r.endereco)})` : ''}, representada por <strong>${esc(r.representante)}</strong>.</p>
     </div>
     <h4>CLÁUSULA 1ª – DO OBJETO</h4>
-    <p>Formalização de parceria comercial no âmbito da campanha <em>Irmão ajuda Irmão</em>. Segmento: <strong>${r.segmento}</strong>. Serviços: ${r.descricao_negocio}</p>
+    <p>Formalização de parceria comercial no âmbito da campanha <em>Irmão ajuda Irmão</em>. Segmento: <strong>${esc(r.segmento)}</strong>. Serviços: ${esc(r.descricao_negocio)}</p>
     <h4>CLÁUSULA 2ª – DOS BENEFICIÁRIOS</h4>
     <p><strong>2.1.</strong> São beneficiários:</p>
     <ul>
@@ -350,9 +356,9 @@ function gerarMinuta(r) {
     <p><strong>2.3.</strong> A CONVENIADA não poderá restringir o atendimento a beneficiários regularizados.</p>
     <h4>CLÁUSULA 3ª – DOS BENEFÍCIOS</h4>
     <ul>
-      <li><strong>Desconto:</strong> <strong>${r.percentual_desconto}%</strong>;</li>
+      <li><strong>Desconto:</strong> <strong>${esc(r.percentual_desconto)}%</strong>;</li>
       <li><strong>Tipo:</strong> ${parceriasTexto};</li>
-      <li><strong>Condições:</strong> ${r.proposta_detalhes}.</li>
+      <li><strong>Condições:</strong> ${esc(r.proposta_detalhes)}.</li>
     </ul>
     <h4>CLÁUSULA 4ª – OBRIGAÇÕES DA CONVENIADA</h4>
     <ul>
@@ -379,7 +385,7 @@ function gerarMinuta(r) {
       <p>Rio de Janeiro, ${hoje}.</p>
       <div class="assinatura-grid">
         <div class="assinatura-bloco">Grande Oriente do Brasil no Estado do Rio de Janeiro<br/>André Luís Rosa dos Santos<br/>Grão-Mestre Estadual</div>
-        <div class="assinatura-bloco">${r.razao_social}<br/>${r.representante}<br/>Representante Legal<br/><em>Assinatura digital: ${r.nome_assinatura}</em></div>
+        <div class="assinatura-bloco">${esc(r.razao_social)}<br/>${esc(r.representante)}<br/>Representante Legal<br/><em>Assinatura digital: ${esc(r.nome_assinatura)}</em></div>
       </div>
       <p style="margin-top:24px;font-size:.8rem;color:#555;">TESTEMUNHAS:</p>
       <div class="assinatura-grid" style="margin-top:8px;">
@@ -387,7 +393,7 @@ function gerarMinuta(r) {
         <div class="assinatura-bloco">2) Nome: _____________________<br/>CPF nº: ______________________</div>
       </div>
     </div>
-    <div class="minuta-rodape">Documento gerado – Irmão ajuda Irmão · GOBRJ · ${new Date().toLocaleString('pt-BR')} · Aceite digital: ${r.nome_assinatura}</div>
+    <div class="minuta-rodape">Documento gerado – Irmão ajuda Irmão · GOBRJ · ${new Date().toLocaleString('pt-BR')} · Aceite digital: ${esc(r.nome_assinatura)}</div>
   </div>`;
 }
 
