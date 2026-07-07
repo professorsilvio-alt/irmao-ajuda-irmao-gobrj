@@ -331,15 +331,25 @@ ul { list-style: none; }
   }
   .navbar-menu.open { display: flex; }
 
-  .nav-item { width: 100%; border-bottom: 1px solid rgba(255,255,255,.06); }
+  .nav-item { 
+    display: block; 
+    width: 100%; 
+    border-bottom: 1px solid rgba(255,255,255,.06); 
+  }
   .nav-item:last-child { border-bottom: none; }
   .nav-link {
-    display: block; padding: 13px 20px !important;
+    display: block !important; 
+    width: 100%;
+    padding: 14px 20px !important;
     font-size: .82rem !important;
-    border-bottom: none !important;
+    border-bottom: 0px solid transparent !important;
   }
   .nav-link::after { display: none !important; }
-  .nav-link.active { border-left: 3px solid var(--gold); padding-left: 17px !important; }
+  .nav-link.active { 
+    border-left: 4px solid var(--gold) !important; 
+    padding-left: 16px !important; 
+    background: rgba(200,162,52,.08);
+  }
   .nav-dropdown {
     position: static !important;
     display: none;
