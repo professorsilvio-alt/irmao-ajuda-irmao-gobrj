@@ -315,48 +315,38 @@ ul { list-style: none; }
   .footer-logos { gap: 12px; }
   .footer-logo-img { width: 72px; height: 72px; }
 
-  /* Navbar – hamburger */
-  .navbar-inner { justify-content: space-between; align-items: center; position: relative; }
-  .nav-hamburger { display: flex; }
-
-  .navbar-menu {
-    display: none;
-    position: absolute; top: 100%; left: 0; right: 0;
-    background: var(--navy-dark);
-    border-top: 2px solid var(--gold);
-    flex-direction: column;
-    z-index: 999;
-    padding: 8px 0;
-    box-shadow: 0 8px 24px rgba(0,0,0,.45);
+  /* Navbar – Horizontal Wrapping */
+  .navbar-inner { padding: 4px 8px; justify-content: center; }
+  .navbar-menu { 
+    display: flex; 
+    flex-wrap: wrap; 
+    justify-content: center; 
+    gap: 4px; 
   }
-  .navbar-menu.open { display: flex; }
-
   .nav-item { 
-    display: block; 
-    width: 100%; 
-    border-bottom: 1px solid rgba(255,255,255,.06); 
+    display: flex; 
+    width: auto; 
+    border-bottom: none; 
   }
-  .nav-item:last-child { border-bottom: none; }
   .nav-link {
-    display: block !important; 
-    width: 100%;
-    padding: 14px 20px !important;
-    font-size: .82rem !important;
-    border-bottom: 0px solid transparent !important;
+    display: flex !important; 
+    width: auto;
+    padding: 10px 12px !important;
+    font-size: .72rem !important;
+    border-bottom: 2px solid transparent !important;
+    border-left: none !important;
+    border-radius: 4px;
   }
-  .nav-link::after { display: none !important; }
+  .nav-link:hover { background: rgba(255,255,255,.05); }
   .nav-link.active { 
-    border-left: 4px solid var(--gold) !important; 
-    padding-left: 16px !important; 
+    border-bottom-color: var(--gold) !important; 
+    padding-left: 12px !important; 
     background: rgba(200,162,52,.08);
   }
   .nav-dropdown {
-    position: static !important;
-    display: none;
-    background: rgba(255,255,255,.04);
-    padding: 4px 0 4px 20px;
+    min-width: 160px;
+    padding: 0;
   }
-  .nav-item:hover .nav-dropdown { display: block; }
 
   /* Carousel */
   .carousel-section { padding: 16px 0; }
