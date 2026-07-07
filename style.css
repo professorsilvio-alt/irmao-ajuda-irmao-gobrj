@@ -153,7 +153,10 @@ ul { list-style: none; }
 }
 .navbar-inner {
   max-width: 1200px; margin: 0 auto; padding: 0 16px;
-  display: flex; align-items: stretch; flex-wrap: wrap;
+  display: flex; align-items: stretch;
+}
+.navbar-menu {
+  display: flex; align-items: stretch; flex-wrap: wrap; width: 100%;
 }
 .nav-item { position: relative; display: flex; align-items: center; }
 .nav-link {
