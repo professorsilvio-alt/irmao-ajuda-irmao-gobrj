@@ -62,82 +62,52 @@
   <header class="site-header">
     <div class="header-banner"></div>
     <div class="header-skyline">
-      <svg viewBox="0 0 900 180" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMaxYMax meet">
-        <defs>
-          <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#4a90d9" stop-opacity=".35" />
-            <stop offset="100%" stop-color="#1a3a6e" stop-opacity=".1" />
-          </linearGradient>
-          <linearGradient id="mtnGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#1e3d70" stop-opacity=".9" />
-            <stop offset="100%" stop-color="#0e1e38" stop-opacity=".95" />
-          </linearGradient>
-          <linearGradient id="mtnGrad2" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#243d72" stop-opacity=".7" />
-            <stop offset="100%" stop-color="#162545" stop-opacity=".8" />
-          </linearGradient>
-        </defs>
-        <rect width="900" height="180" fill="url(#skyGrad)" />
-        <path d="M300 180 L400 60 L460 90 L530 20 L600 70 L680 10 L760 55 L840 25 L900 50 L900 180Z"
-          fill="url(#mtnGrad)" />
-        <path d="M380 180 L460 100 L510 120 L570 75 L640 105 L700 55 L770 90 L830 45 L900 80 L900 180Z"
-          fill="url(#mtnGrad2)" opacity=".7" />
-        <g transform="translate(610,15)" opacity=".85">
-          <rect x="12" y="24" width="3" height="55" fill="#e8f0fc" rx="1" />
-          <rect x="2" y="38" width="25" height="4" fill="#e8f0fc" rx="1" />
-          <ellipse cx="13" cy="20" rx="5" ry="6" fill="#e8f0fc" />
-          <rect x="11" y="26" width="5" height="16" fill="#d0ddf0" opacity=".6" />
-        </g>
-        <ellipse cx="820" cy="88" rx="42" ry="52" fill="#1e3460" opacity=".85" />
-        <ellipse cx="862" cy="108" rx="28" ry="36" fill="#243557" opacity=".75" />
-        <g transform="translate(430,95)" opacity=".6">
-          <rect x="0" y="0" width="7" height="85" fill="#c8a234" rx="1" />
-          <rect x="32" y="0" width="7" height="85" fill="#c8a234" rx="1" />
-          <path d="M0 2 Q19.5,-25 39 2" stroke="#c8a234" stroke-width="6" fill="none" stroke-linecap="round" />
-          <rect x="18" y="0" width="7" height="85" fill="#c8a234" rx="1" opacity=".7" />
-          <path d="M7 2 Q15,-14 25 2" stroke="#c8a234" stroke-width="5" fill="none" />
-          <path d="M25 2 Q33,-14 39 2" stroke="#c8a234" stroke-width="5" fill="none" />
-        </g>
-        <ellipse cx="720" cy="140" rx="55" ry="14" fill="none" stroke="#243d72" stroke-width="4" opacity=".5" />
-        <ellipse cx="720" cy="140" rx="45" ry="10" fill="#162545" opacity=".4" />
-        <ellipse cx="320" cy="35" rx="70" ry="20" fill="#ffffff" opacity=".06" />
-        <ellipse cx="500" cy="22" rx="55" ry="15" fill="#ffffff" opacity=".05" />
-        <ellipse cx="750" cy="30" rx="80" ry="18" fill="#ffffff" opacity=".06" />
-      </svg>
+      <img src="rj-banner.png" alt="Pontos turísticos do Rio de Janeiro" class="header-skyline-img" />
     </div>
     <div class="header-logo-wrap">
-      <img src="logo-gobrj.png" alt="Grande Oriente do Brasil – Rio de Janeiro" class="header-logo-img" />
+      <div class="header-logos">
+        <img src="logo-gobrj.png" alt="Grande Oriente do Brasil – Rio de Janeiro" class="header-logo-img" />
+        <div class="header-logo-divider"></div>
+        <img src="logo-gobrj-footer.png" alt="Secretaria de Previdência e Assistência" class="header-logo-img" />
+      </div>
     </div>
   </header>
 
-  <!-- ========== NAVBAR ========== -->
   <nav class="navbar" id="navbar">
     <div class="navbar-inner">
-      <div class="nav-item">
-        <a href="index.html" class="nav-link active" id="nav-inicio">INÍCIO</a>
-      </div>
-      <div class="nav-item">
-        <a href="#sobre" class="nav-link" id="nav-sobre">SOBRE</a>
-      </div>
-      <div class="nav-item">
-        <a href="#formulario" class="nav-link" id="nav-cadastro">CADASTRO</a>
-      </div>
-      <div class="nav-item">
-        <a href="#beneficiarios" class="nav-link" id="nav-beneficiarios">BENEFICIÁRIOS</a>
-      </div>
-      <div class="nav-item">
-        <span class="nav-link" id="nav-parceiros">PARCEIROS <span class="nav-arrow">▾</span></span>
-        <div class="nav-dropdown">
-          <a href="#parceiros-list">Todos os Convênios</a>
-          <a href="#parceiros-destaque">Destaques</a>
-          <a href="#parceiros-segmentos">Por Segmento</a>
+      <!-- Hambúrguer mobile -->
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <!-- Menu -->
+      <div class="navbar-menu" id="navbar-menu">
+        <div class="nav-item">
+          <a href="index.html" class="nav-link active" id="nav-inicio">INÍCIO</a>
         </div>
-      </div>
-      <div class="nav-item">
-        <a href="#contato" class="nav-link" id="nav-contato">CONTATO</a>
-      </div>
-      <div class="nav-item">
-        <a href="admin.html" class="nav-link" id="nav-admin">ADMIN</a>
+        <div class="nav-item">
+          <a href="#sobre" class="nav-link" id="nav-sobre">SOBRE</a>
+        </div>
+        <div class="nav-item">
+          <a href="#formulario" class="nav-link" id="nav-cadastro">CADASTRO</a>
+        </div>
+        <div class="nav-item">
+          <a href="#beneficiarios" class="nav-link" id="nav-beneficiarios">BENEFICIÁRIOS</a>
+        </div>
+        <div class="nav-item">
+          <span class="nav-link" id="nav-parceiros">PARCEIROS <span class="nav-arrow">▾</span></span>
+          <div class="nav-dropdown">
+            <a href="#parceiros-list">Todos os Convênios</a>
+            <a href="#parceiros-destaque">Destaques</a>
+            <a href="#parceiros-segmentos">Por Segmento</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <a href="#contato" class="nav-link" id="nav-contato">CONTATO</a>
+        </div>
+        <div class="nav-item">
+          <a href="admin.html" class="nav-link" id="nav-admin">ADMIN</a>
+        </div>
       </div>
     </div>
   </nav>
@@ -859,14 +829,17 @@
         </ul>
       </div>
 
-      <!-- Centro: logo + nome -->
+      <!-- Centro: logos + nome -->
       <div class="footer-center">
-        <img src="logo-gobrj-footer.png" alt="Grande Oriente do Brasil – Rio de Janeiro" class="footer-logo-img" />
+        <div class="footer-logos">
+          <img src="logo-gobrj-footer.png" alt="Grande Oriente do Brasil – Rio de Janeiro" class="footer-logo-img" />
+          <img src="logo-gobrj.png" alt="Secretaria de Previdência e Assistência" class="footer-logo-img" />
+        </div>
         <div class="footer-org-name">Grande Oriente do Brasil – RJ</div>
         <div class="footer-org-sub">Federado ao Grande Oriente do Brasil</div>
         <div class="footer-coord">
           <span>Coordenação da Campanha:</span>
-          <strong>Ir. ∴ Silvio Freitas</strong>
+          <strong>Secretaria de Previdência e Assistência</strong>
         </div>
       </div>
 
@@ -973,6 +946,28 @@
       dots.forEach(d => d.onclick = () => { clearInterval(timer); goTo(+d.dataset.index); startTimer(); });
       function startTimer() { timer = setInterval(() => goTo(current + 1), 6000); }
       startTimer();
+    })();
+  </script>
+
+  <!-- Hamburger Script -->
+  <script>
+    (function () {
+      const btn  = document.getElementById('nav-hamburger');
+      const menu = document.getElementById('navbar-menu');
+      if (!btn || !menu) return;
+      btn.addEventListener('click', function () {
+        const isOpen = menu.classList.toggle('open');
+        btn.classList.toggle('open', isOpen);
+        btn.setAttribute('aria-expanded', isOpen);
+      });
+      // Fecha o menu ao clicar em qualquer link
+      menu.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', function () {
+          menu.classList.remove('open');
+          btn.classList.remove('open');
+          btn.setAttribute('aria-expanded', 'false');
+        });
+      });
     })();
   </script>
 

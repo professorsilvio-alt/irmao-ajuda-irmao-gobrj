@@ -87,14 +87,24 @@ ul { list-style: none; }
     radial-gradient(ellipse 60% 80% at 70% 50%, rgba(30,60,110,.6) 0%, transparent 70%),
     radial-gradient(ellipse 30% 50% at 85% 30%, rgba(200,162,52,.08) 0%, transparent 60%);
 }
-/* Skyline decorativa */
+/* Montagem fotográfica de pontos turísticos do RJ */
 .header-skyline {
-  position: absolute; bottom: 0; right: 0;
-  width: 75%; height: 100%;
-  display: flex; align-items: flex-end;
+  position: absolute; top: 0; right: 0;
+  width: 78%; height: 100%;
   pointer-events: none;
+  overflow: hidden;
+  /* Fade gradual da esquerda, idêntico ao estilo GOB-RJ */
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,.6) 18%, rgba(0,0,0,1) 40%);
+  mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,.6) 18%, rgba(0,0,0,1) 40%);
 }
-.header-skyline svg { width: 100%; height: 100%; }
+.header-skyline-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+  opacity: .62;
+  display: block;
+}
+
 
 .header-logo-wrap {
   position: absolute; top: 50%; left: 24px;
@@ -107,7 +117,32 @@ ul { list-style: none; }
   border-radius: 50%;
   box-shadow: 0 0 0 3px rgba(200,162,52,.35), 0 6px 24px rgba(0,0,0,.55);
   display: block;
+  flex-shrink: 0;
 }
+
+/* Duas logos no header */
+.header-logos {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.header-logo-divider {
+  width: 2px;
+  height: 90px;
+  background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+  opacity: .7;
+  flex-shrink: 0;
+}
+
+/* Duas logos no footer */
+.footer-logos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+
 
 /* ============================================================ NAVBAR */
 .navbar {
@@ -230,6 +265,191 @@ ul { list-style: none; }
   display: grid; grid-template-columns: 1fr 295px; gap: 22px;
 }
 @media (max-width: 900px) { .page-body { grid-template-columns: 1fr; } }
+
+/* ============================================================ HAMBURGER NAV */
+.nav-hamburger {
+  display: none;
+  flex-direction: column; justify-content: center; align-items: center;
+  gap: 5px; width: 42px; height: 42px;
+  background: none; border: none; cursor: pointer;
+  padding: 6px;
+}
+.nav-hamburger span {
+  display: block; width: 22px; height: 2px;
+  background: var(--white); border-radius: 2px;
+  transition: all 0.28s ease;
+  transform-origin: center;
+}
+.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ============================================================ TABLET (≤ 1024px) */
+@media (max-width: 1024px) {
+  .header-skyline { width: 60%; }
+  .header-logo-img { width: 100px; height: 100px; }
+  .site-header { height: 160px; }
+  .header-logos { gap: 10px; }
+  .header-logo-divider { height: 70px; }
+
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .footer-center { grid-column: 1 / -1; order: -1; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,.08); }
+
+  .news-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* ============================================================ MOBILE (≤ 768px) */
+@media (max-width: 768px) {
+
+  /* Topbar */
+  .topbar-right span { display: none; }
+  .topbar-social a { width: 26px; height: 26px; }
+
+  /* Header */
+  .site-header { height: 140px; }
+  .header-skyline { width: 50%; opacity: .5; }
+  .header-logo-wrap { left: 50%; transform: translate(-50%, -50%); }
+  .header-logo-img { width: 74px; height: 74px; }
+  .header-logos { gap: 8px; }
+  .header-logo-divider { height: 52px; }
+  .footer-logos { gap: 12px; }
+  .footer-logo-img { width: 72px; height: 72px; }
+
+  /* Navbar – hamburger */
+  .navbar-inner { justify-content: space-between; align-items: center; position: relative; }
+  .nav-hamburger { display: flex; }
+
+  .navbar-menu {
+    display: none;
+    position: absolute; top: 100%; left: 0; right: 0;
+    background: var(--navy-dark);
+    border-top: 2px solid var(--gold);
+    flex-direction: column;
+    z-index: 999;
+    padding: 8px 0;
+    box-shadow: 0 8px 24px rgba(0,0,0,.45);
+  }
+  .navbar-menu.open { display: flex; }
+
+  .nav-item { width: 100%; border-bottom: 1px solid rgba(255,255,255,.06); }
+  .nav-item:last-child { border-bottom: none; }
+  .nav-link {
+    display: block; padding: 13px 20px !important;
+    font-size: .82rem !important;
+    border-bottom: none !important;
+  }
+  .nav-link::after { display: none !important; }
+  .nav-link.active { border-left: 3px solid var(--gold); padding-left: 17px !important; }
+  .nav-dropdown {
+    position: static !important;
+    display: none;
+    background: rgba(255,255,255,.04);
+    padding: 4px 0 4px 20px;
+  }
+  .nav-item:hover .nav-dropdown { display: block; }
+
+  /* Carousel */
+  .carousel-section { padding: 16px 0; }
+  .carousel-slide {
+    flex-direction: column !important;
+    padding: 16px !important;
+    gap: 14px !important;
+    min-width: 100% !important;
+  }
+  .slide-logo-placeholder { font-size: 2rem !important; width: 52px !important; height: 52px !important; }
+  .slide-content h2 { font-size: 1rem !important; }
+  .slide-content p { font-size: .78rem !important; }
+  .slide-qr { display: none; }
+  .carousel-btn { width: 32px !important; height: 32px !important; font-size: 1.1rem !important; }
+
+  /* Quick access */
+  .quick-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+  }
+  .quick-btn { border-right: 1px solid rgba(255,255,255,.08) !important; border-bottom: 1px solid rgba(255,255,255,.08); }
+  .quick-btn:nth-child(2n) { border-right: none !important; }
+  .quick-btn:nth-last-child(-n+2) { border-bottom: none; }
+
+  /* Page body */
+  .page-body { padding: 14px 12px; gap: 14px; }
+
+  /* Beneficiários */
+  #beneficiarios > div:last-child {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Campanha banner */
+  .campanha-banner { padding: 18px 16px; }
+  .campanha-banner h1 { font-size: 1.2rem; }
+  .campanha-meta { gap: 8px; flex-direction: column; }
+
+  /* Form */
+  .form-wrapper-body { padding: 14px 12px; }
+  .form-grid { grid-template-columns: 1fr !important; }
+  .form-group.full { grid-column: auto !important; }
+
+  /* Steps */
+  .steps { gap: 0; }
+  .step > span { display: none; }
+  .step-circle { width: 26px; height: 26px; font-size: .7rem; }
+  .step-line { margin-bottom: 0; }
+
+  /* Clausulas */
+  .clausulas-container { max-height: 240px; }
+
+  /* Sidebar */
+  .sidebar { order: -1; }
+
+  /* Footer campaign bar */
+  .footer-campaign-bar { padding: 12px 16px; }
+  .footer-campaign-inner { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .fc-btn { margin-left: 0; width: 100%; text-align: center; }
+
+  /* Footer */
+  .footer-grid { grid-template-columns: 1fr !important; padding: 0 16px; gap: 20px; }
+  .footer-center { grid-column: auto; order: -1; border-bottom: 1px solid rgba(255,255,255,.08); padding-bottom: 16px; }
+  .footer-links ul li a { justify-content: center; }
+  .footer-links h4, .footer-contact h4 { text-align: center; }
+  .footer-contact-items { align-items: center; }
+  .footer-contact-item { justify-content: center; }
+  .footer-social { justify-content: center; }
+
+  /* Footer bottom */
+  .footer-bottom { flex-direction: column !important; text-align: center; gap: 6px !important; }
+
+  /* Modal */
+  .modal { margin: 10px; max-height: 95vh; }
+  .modal-body { padding: 14px; }
+  .modal-footer { flex-wrap: wrap; }
+  .modal-footer .btn-primary,
+  .modal-footer .btn-secondary { flex: 1; text-align: center; justify-content: center; }
+
+  /* News */
+  .news-grid { grid-template-columns: 1fr !important; }
+}
+
+/* ============================================================ SMALL MOBILE (≤ 480px) */
+@media (max-width: 480px) {
+  .site-header { height: 110px; }
+  .header-logo-img { width: 82px; height: 82px; }
+
+  .topbar-social a { width: 24px; height: 24px; }
+
+  .campanha-banner h1 { font-size: 1.05rem; }
+
+  .btn-primary, .btn-secondary, .btn-submit {
+    width: 100%; justify-content: center;
+  }
+  .step-actions { flex-direction: column; gap: 8px; }
+  .step-actions .btn-secondary { order: 2; }
+  .step-actions .btn-primary, .step-actions .btn-submit { order: 1; }
+
+  .clausula-section { padding: 12px; }
+  .clausula-section h4 { font-size: .8rem; }
+  .clausula-section p, .clausula-section li { font-size: .76rem; }
+}
+
 
 /* ============================================================ MAIN CONTENT */
 .main-content { min-width: 0; }
